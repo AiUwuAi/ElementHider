@@ -8,7 +8,7 @@ const config = {
   hoveringOption: 0,
   words: 0,
   performanceMode: 0,
-  testingMode: 0,
+  titeMode: 0,
   urlRule: 0,
   urls: 0,
   observer: 0,
@@ -25,7 +25,7 @@ const initConfig = () => {
       "blurOption",
       "hoveringOption",
       "performanceMode",
-      "testingMode",
+      "titeMode",
       "words",
       "urlRule",
       "urls",
@@ -45,7 +45,7 @@ const initConfig = () => {
       config.blurOption = result.blurOption;
       config.hoveringOption = result.hoveringOption;
       config.performanceMode = result.performanceMode;
-      config.testingMode = result.testingMode;
+      config.titeMode = result.titeMode;
       config.words = result.words;
       config.urlRule = result.urlRule;
       config.urls = result.urls;
@@ -122,12 +122,12 @@ function hideElem(elem, word) {
 
 /**
  * hideViaSelector, Hides elements via css-selector
- * If testing mode is on, highlights elements with blue instead of hiding
+ * If tite mode is on, highlights elements with blue instead of hiding
  * @param  String selector - css-selector to hide
- * @param  bool testingMode - testingMode on/off
+ * @param  bool titeMode - titeMode on/off
  */
-function hideViaSelector(selector, testingMode) {
-  if (!testingMode) {
+function hideViaSelector(selector, titeMode) {
+  if (!titeMode) {
     if ($(selector).css("display") != "none") {
       $(selector).css({
         display: "none",
@@ -146,10 +146,10 @@ function hideViaSelector(selector, testingMode) {
 /**
  * checkAllElems, go through elements and check if they contain any of the keywords
  * @param  Array wordlist - array of keywords
- * @param  bool testingMode - testing mode on/off
+ * @param  bool titeMode - tite mode on/off
  * @param  Element elem - Element or string of tags
  */
-function checkAllElems(wordlist, testingMode, elem) {
+function checkAllElems(wordlist, titeMode, elem) {
   let checkElem,
     elemType,
     found = false;
@@ -195,7 +195,7 @@ function checkAllElems(wordlist, testingMode, elem) {
             if (word.slice(0, 1) == "{" && word.slice(-1) == "}") {
               hideViaSelector(
                 $(word.replace("{", "").replace("}", "")),
-                testingMode
+                titeMode
               );
               continue;
             }
@@ -215,7 +215,7 @@ function checkAllElems(wordlist, testingMode, elem) {
                   checkElem.css("display") != "none"
                 ) {
                   found = true;
-                  if (!testingMode) hideElem(checkElem, word);
+                  if (!titeMode) hideElem(checkElem, word);
                   else testElem(checkElem, word);
                 }
                 // If keyword has to be exact and case-sensitive
@@ -227,7 +227,7 @@ function checkAllElems(wordlist, testingMode, elem) {
                   checkElem.css("display") != "none"
                 ) {
                   found = true;
-                  if (!testingMode) hideElem(checkElem, word);
+                  if (!titeMode) hideElem(checkElem, word);
                   else testElem(checkElem, word);
                 }
               }
@@ -239,7 +239,7 @@ function checkAllElems(wordlist, testingMode, elem) {
                 checkElem.css("display") != "none"
               ) {
                 found = true;
-                if (!testingMode) hideElem(checkElem, word);
+                if (!titeMode) hideElem(checkElem, word);
                 else testElem(checkElem, word);
               }
               // Word is case-sensitive and it can appear anywhere in the text.
@@ -250,7 +250,7 @@ function checkAllElems(wordlist, testingMode, elem) {
                 checkElem.css("display") != "none"
               ) {
                 found = true;
-                if (!testingMode) hideElem(checkElem, word);
+                if (!titeMode) hideElem(checkElem, word);
                 else testElem(checkElem, word);
               }
             }
@@ -282,7 +282,7 @@ const checkAlreadyFound = () => {
 function getWordlist(elem) {
   let wordlist;
   wordlist = config.words.split("\n");
-  checkAllElems(wordlist, config.testingMode, elem);
+  checkAllElems(wordlist, config.titeMode, elem);
 }
 
 /**
